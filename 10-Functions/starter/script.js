@@ -92,8 +92,8 @@
 // greeterHey("Jesus");
 // greet("Hello")("Ruth");
 
-// the call and apply methods
-//THIS KEYWORD
+// // the call and apply methods
+// //THIS KEYWORD
 const lufthansa = {
   airline: "Lufthansa",
   iataCode: "LH",
@@ -106,8 +106,8 @@ const lufthansa = {
   },
 };
 
-lufthansa.book(239, "Jesus Martha");
-lufthansa.book(635, "Ruth Martha");
+// lufthansa.book(239, "Jesus Martha");
+// lufthansa.book(635, "Ruth Martha");
 
 const euroWings = {
   airline: "Eurowiings",
@@ -117,19 +117,50 @@ const euroWings = {
 
 const book = lufthansa.book;
 
-// does not work
-// book(23, "Jesus martha")
-// call method
-book.call(euroWings, 23, "Sr Martha");
-console.log(euroWings);
+// // does not work
+// // book(23, "Jesus martha")
+// // call method
+// book.call(euroWings, 23, "Sr Martha");
+// console.log(euroWings);
 
-book.call(lufthansa, 239, "Rosendo M<artha");
+// book.call(lufthansa, 239, "Rosendo M<artha");
 
-const fliightData = [583, "George Cooper"];
+// const fliightData = [583, "George Cooper"];
 
-// apply method
-// not use a lot anymore
-book.apply(euroWings, fliightData);
+// // apply method
+// // not use a lot anymore
+// book.apply(euroWings, fliightData);
 
-// this is better
-book.call(lufthansa, ...fliightData);
+// // this is better
+// book.call(lufthansa, ...fliightData);
+
+//BIND METHOD
+const bookEW = book.bind(euroWings);
+const bookLH = book.bind(lufthansa);
+
+bookEW(235, "Steven");
+bookLH(333, "Sarai");
+
+// with eventlisteners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+};
+
+document
+  .querySelector(".buy")
+  .addEventListener("click", lufthansa.buyPlane.bind(lufthansa));
+
+// partial application
+const addTax = function (rate, value) {
+  return value + value * rate;
+};
+
+console.log(addTax(0.1, 200));
+
+const addVAT = addTax.bind(null, 0.23);
+
+console.log(addVAT(100));
