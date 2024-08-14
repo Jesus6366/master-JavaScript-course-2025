@@ -82,12 +82,54 @@
 //   };
 // };
 
-const greet = (greeting) => {
-  return (name) => {
-    console.log(`${greeting} ${name}`);
-  };
+// const greet = (greeting) => {
+//   return (name) => {
+//     console.log(`${greeting} ${name}`);
+//   };
+// };
+
+// const greeterHey = greet("Hey");
+// greeterHey("Jesus");
+// greet("Hello")("Ruth");
+
+// the call and apply methods
+//THIS KEYWORD
+const lufthansa = {
+  airline: "Lufthansa",
+  iataCode: "LH",
+  booking: [],
+  book(fligthNum, name) {
+    console.log(
+      `${name}, booked a seat on ${this.airline} fligth  ${this.iataCode} ${fligthNum}`
+    );
+    this.booking.push({ fligth: `${this.iataCode} ${fligthNum}` });
+  },
 };
 
-const greeterHey = greet("Hey");
-greeterHey("Jesus");
-greet("Hello")("Ruth");
+lufthansa.book(239, "Jesus Martha");
+lufthansa.book(635, "Ruth Martha");
+
+const euroWings = {
+  airline: "Eurowiings",
+  iataCode: "EW",
+  booking: [],
+};
+
+const book = lufthansa.book;
+
+// does not work
+// book(23, "Jesus martha")
+// call method
+book.call(euroWings, 23, "Sr Martha");
+console.log(euroWings);
+
+book.call(lufthansa, 239, "Rosendo M<artha");
+
+const fliightData = [583, "George Cooper"];
+
+// apply method
+// not use a lot anymore
+book.apply(euroWings, fliightData);
+
+// this is better
+book.call(lufthansa, ...fliightData);
