@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // const bookings = [];
 
@@ -49,29 +49,45 @@
 //first class is just the regular functions
 // the higher order is a function that accepts a function as parameter or returns a function
 
-const oneWord = function (str) {
-  return str.replace(/ /g, '').toLowerCase();
+// const oneWord = function (str) {
+//   return str.replace(/ /g, '').toLowerCase();
+// };
+
+// const upperFirstWord = function (str) {
+//   const [first, ...other] = str.split(' ');
+//   return [first.toUpperCase(), ...other].join(' ');
+// };
+
+// // higher order function
+// // it is a function that receives another function as an argument or returns a function
+// const transformer = function (str, fn) {
+//   console.log(`Transformed String: ${fn(str)}`);
+// };
+
+// transformer('JavaScript is the best!', upperFirstWord);
+// transformer('JavaScript is the best!', oneWord);
+
+// // callback funcion is a function that is passed as argument
+
+// const high5 = function () {
+//   console.log('HEIGH');
+// };
+
+// // here the addEventListener is the higher function and the high5 funcion is the callback function
+// document.body.addEventListener('click', high5);
+
+// const greet = function (greeting) {
+//   return function (name) {
+//     console.log(`${greeting} ${name}`);
+//   };
+// };
+
+const greet = (greeting) => {
+  return (name) => {
+    console.log(`${greeting} ${name}`);
+  };
 };
 
-const upperFirstWord = function (str) {
-  const [first, ...other] = str.split(' ');
-  return [first.toUpperCase(), ...other].join(' ');
-};
-
-// higher order function
-// it is a function that receives another function as an argument or returns a function
-const transformer = function (str, fn) {
-  console.log(`Transformed String: ${fn(str)}`);
-};
-
-transformer('JavaScript is the best!', upperFirstWord);
-transformer('JavaScript is the best!', oneWord);
-
-// callback funcion is a function that is passed as argument
-
-const high5 = function () {
-  console.log('HEIGH');
-};
-
-// here the addEventListener is the higher function and the high5 funcion is the callback function
-document.body.addEventListener('click', high5);
+const greeterHey = greet("Hey");
+greeterHey("Jesus");
+greet("Hello")("Ruth");
