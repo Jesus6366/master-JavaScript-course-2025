@@ -23,24 +23,55 @@
 
 // value vs reference
 
-const flight = 'LH234';
+// const flight = 'LH234';
 
-const jesus = {
-  name: 'jesus martha',
-  passport: 32135245646,
+// const jesus = {
+//   name: 'jesus martha',
+//   passport: 32135245646,
+// };
+
+// const checkIn = function (flightNum, passenger) {
+//   // this will modify the original jesus object because it is of reference type
+//   passenger.name = 'Mr. ' + passenger.name;
+
+//   if (passenger.passport === 32135245646) {
+//     alert('Checked in');
+//   } else {
+//     alert('Wrong passport!');
+//   }
+// };
+
+// checkIn(flight, jesus);
+// console.log(flight);
+// console.log(jesus);
+
+//FIRST-CLASS VS HIGHER-ORDER FUNCTIONS
+//first class is just the regular functions
+// the higher order is a function that accepts a function as parameter or returns a function
+
+const oneWord = function (str) {
+  return str.replace(/ /g, '').toLowerCase();
 };
 
-const checkIn = function (flightNum, passenger) {
-  // this will modify the original jesus object because it is of reference type
-  passenger.name = 'Mr. ' + passenger.name;
-
-  if (passenger.passport === 32135245646) {
-    alert('Checked in');
-  } else {
-    alert('Wrong passport!');
-  }
+const upperFirstWord = function (str) {
+  const [first, ...other] = str.split(' ');
+  return [first.toUpperCase(), ...other].join(' ');
 };
 
-checkIn(flight, jesus);
-console.log(flight);
-console.log(jesus);
+// higher order function
+// it is a function that receives another function as an argument or returns a function
+const transformer = function (str, fn) {
+  console.log(`Transformed String: ${fn(str)}`);
+};
+
+transformer('JavaScript is the best!', upperFirstWord);
+transformer('JavaScript is the best!', oneWord);
+
+// callback funcion is a function that is passed as argument
+
+const high5 = function () {
+  console.log('HEIGH');
+};
+
+// here the addEventListener is the higher function and the high5 funcion is the callback function
+document.body.addEventListener('click', high5);
