@@ -127,13 +127,27 @@ createUsernames(accounts);
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
-
 const currencies = new Map([
   ["USD", "United States dollar"],
   ["EUR", "Euro"],
   ["GBP", "Pound sterling"],
 ]);
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// THE .FIND METHOD
+// ONLY RETURNS THE RESULT OF THE FIND AND NOT A NE ARRAY ALSO IT IS ONLY THE FIRST ELEMENT THAT FINDS ONLY
+const firstWithdrawal = movements.find((mov) => mov < 0);
+console.log(firstWithdrawal);
+
+const owner = accounts.find((acc) => acc.owner === "Jessica Davis");
+console.log(owner);
+
+accounts.forEach((acc) =>
+  acc.owner === "Jessica Davis"
+    ? console.log("Found Jessica Davis's account:", acc)
+    : null
+);
+
 const euroToUsd = 1.1;
 // CHAINING METHODS
 const totalDepositsUSD = movements
