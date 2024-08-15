@@ -268,20 +268,25 @@ TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
 GOOD LUCK 😀
 */
 
-const calcAverageHumanAge = function (ages) {
-  const humanAge = ages.map((age) => {
-    if (age <= 2) {
-      return 2 * age;
-    } else {
-      return 16 + age * 4;
-    }
-  });
-
-  const older18 = humanAge.filter((age) => {
-    return age > 18;
-  });
-
-  return older18.reduce((acc, cur) => acc + cur) / older18.length;
+const calcAverageHumanAge = (ages) => {
+  // const filetered = [];
+  const humanAge = ages
+    .map((age) => {
+      if (age <= 2) {
+        return 2 * age;
+      } else {
+        return 16 + age * 4;
+      }
+    })
+    .filter((age) => {
+      return age >= 18;
+    })
+    .reduce((acc, cur, i, arr) => {
+      return acc + cur / arr.length;
+    }, 0);
+  return humanAge;
 };
+
+// on reduce method always use the 0 at the end }, 0) or the begginning
 
 // console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
