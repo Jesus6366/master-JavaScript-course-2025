@@ -185,6 +185,21 @@ btnTransfer.addEventListener("click", function (e) {
   }
 });
 
+btnLoan.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (
+    amount > 0 &&
+    currentAccount.movements.some((mov) => mov >= amount / 10)
+  ) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = "";
+});
+
 btnClose.addEventListener("click", function (e) {
   e.preventDefault();
 
@@ -213,6 +228,16 @@ const currencies = new Map([
   ["GBP", "Pound sterling"],
 ]);
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// SOME AND EVERY METHOD
+
+// equility
+movements.includes(-130);
+// some condition
+const anyDeposits = movements.some((mov) => mov > 1500);
+
+// every only returns true if all the elements are true
+movements.every((mov)=> mov > 0)
 
 // THE .FIND METHOD
 // ONLY RETURNS THE RESULT OF THE FIND AND NOT A NE ARRAY ALSO IT IS ONLY THE FIRST ELEMENT THAT FINDS ONLY
