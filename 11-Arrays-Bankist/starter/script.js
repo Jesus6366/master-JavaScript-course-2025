@@ -81,6 +81,15 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+const calcAndDisplay = function (movements) {
+  const balance = movements.reduce((acc, movement) => {
+    return acc + movement;
+  }, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+
+calcAndDisplay(account1.movements);
+
 const createUsernames = function (accounts) {
   accounts.forEach(function (acc) {
     acc.username = acc.owner
@@ -92,7 +101,6 @@ const createUsernames = function (accounts) {
 };
 
 createUsernames(accounts);
-console.log(accounts);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -104,8 +112,40 @@ const currencies = new Map([
   ["GBP", "Pound sterling"],
 ]);
 
-// MAP METHOD
+// REDUCE METHOD
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// accumulator is like a snowball
+const balance = movements.reduce((acc, curent, i) => {
+  // console.log(`iteration ${i}: ${acc}`);
+
+  return acc + curent;
+}, 0);
+
+// maximum value
+
+const max = movements.reduce((acc, cur) => {
+  if (acc > cur) {
+    return acc;
+  } else {
+    return cur;
+  }
+}, movements[0]);
+console.log(max);
+
+// console.log(balance);
+
+// FILTER method
+
+const deposits = movements.filter((mov) => {
+  return mov > 0;
+});
+
+const withdrawals = movements.filter((mov) => {
+  return mov < 0;
+});
+
+// MAP METHOD
 
 const euroToUsd = 1.1;
 
