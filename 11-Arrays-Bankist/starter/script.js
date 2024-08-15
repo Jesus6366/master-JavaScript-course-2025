@@ -72,7 +72,7 @@ const displayMovements = function (movements) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     }${type}</div>
-        <div class="movements__value">${mov}</div>
+        <div class="movements__value">${mov}💶</div>
     </div>`;
     // this is to insert html
     containerMovements.insertAdjacentHTML("afterbegin", html);
@@ -85,10 +85,32 @@ const calcAndDisplay = function (movements) {
   const balance = movements.reduce((acc, movement) => {
     return acc + movement;
   }, 0);
-  labelBalance.textContent = `${balance} EUR`;
+
+  labelBalance.textContent = `${balance} 💶`;
 };
 
 calcAndDisplay(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes} 💶`;
+
+  const outcomes = movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, cur) => acc + cur);
+  labelSumOut.textContent = `${Math.abs(outcomes)} 💶`;
+
+  const interest = movements
+    .filter((mov) => mov > 0)
+    .map((deposit) => (deposit * 1.2) / 100)
+    .filter((int) => int >= 1)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumInterest.textContent = `${interest} 💶`;
+};
+
+calcDisplaySummary(account1.movements);
 
 const createUsernames = function (accounts) {
   accounts.forEach(function (acc) {
@@ -111,9 +133,22 @@ const currencies = new Map([
   ["EUR", "Euro"],
   ["GBP", "Pound sterling"],
 ]);
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const euroToUsd = 1.1;
+// CHAINING METHODS
+const totalDepositsUSD = movements
+  .filter((mov) => mov > 0)
+  .map((mov, i, arr) => {
+    // console.log(arr);
+
+    return mov * euroToUsd;
+  })
+  .reduce((acc, current) => {
+    return acc + current;
+  });
+// console.log(totalDepositsUSD);
 
 // REDUCE METHOD
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // accumulator is like a snowball
 const balance = movements.reduce((acc, curent, i) => {
@@ -131,7 +166,7 @@ const max = movements.reduce((acc, cur) => {
     return cur;
   }
 }, movements[0]);
-console.log(max);
+// console.log(max);
 
 // console.log(balance);
 
@@ -146,8 +181,6 @@ const withdrawals = movements.filter((mov) => {
 });
 
 // MAP METHOD
-
-const euroToUsd = 1.1;
 
 const movementsUSD = movements.map((mov) => {
   return Math.trunc(mov * euroToUsd);
@@ -251,4 +284,4 @@ const calcAverageHumanAge = function (ages) {
   return older18.reduce((acc, cur) => acc + cur) / older18.length;
 };
 
-console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+// console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
