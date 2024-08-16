@@ -61,9 +61,12 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = "";
-  movements.forEach(function (mov, i) {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     // remove the previous html
     const type = mov > 0 ? "deposit" : "withdrawal";
 
@@ -218,6 +221,13 @@ btnClose.addEventListener("click", function (e) {
   }
   inputCloseUsername.value = inputClosePin.value = "";
 });
+// state variable
+let sorted = false;
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -229,25 +239,48 @@ const currencies = new Map([
 ]);
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
+//SORTING ARRAYS
+const owners = ["jonas", "zach", "adam", "martha"];
+// this will modified the original array and only works in strings
+console.log(owners.sort());
+
+// numbers wont work
+
+// return < 0 a,b (keep order)
+//return > 0 b,a (switch order)
+movements.sort((a, b) => {
+  if (a > b) {
+    return 1;
+  }
+
+  if (b > a) {
+    return -1;
+  }
+});
+
+movements.sort((a, b) => a - b);
+
+// console.log(movements);
+
 // FLAT AND FLATMAP METHODS
 
 const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
-console.log(arr.flat());
+// console.log(arr.flat());
 
 const arrDeep = [[[1, 2], 3, [4, [4, 6]], 7, 8]];
-console.log(arrDeep.flat(2));
+// console.log(arrDeep.flat(2));
 
 const accountMovements = accounts
   .map((acc) => acc.movements)
   .flat()
   .reduce((acc, cur) => acc + cur, 0);
-console.log(accountMovements);
+// console.log(accountMovements);
 
 //FLATMAP
 const accountMovements2 = accounts
   .flatMap((acc) => acc.movements)
   .reduce((acc, cur) => acc + cur, 0);
-console.log(accountMovements2);
+// console.log(accountMovements2);
 
 // SOME AND EVERY METHOD
 
