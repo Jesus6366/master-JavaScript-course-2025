@@ -206,7 +206,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = +inputLoanAmount.value;
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -223,7 +223,7 @@ btnClose.addEventListener('click', function (e) {
 
   if (
     inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username
@@ -248,6 +248,21 @@ btnSort.addEventListener('click', function (e) {
   sorted = !sorted;
 });
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
+// /////////////////////////////////////////////////
+// /////////////////////////////////////////////////
+// // LECTURES
+// // both will result in numbers
+// console.log(Number('23'));
+// console.log(+'23');
+
+// //PARSING
+// console.log(Number.parseInt('23px'));
+// console.log(Number.parseFloat('2.5rem'));
+
+// //ISNAN
+// console.log(Number.isNaN(20));
+
+// // this is better than isnan .finite;
+
+// console.log(Number.isFinite(20));
+// console.log(Number.isFinite('20'));
