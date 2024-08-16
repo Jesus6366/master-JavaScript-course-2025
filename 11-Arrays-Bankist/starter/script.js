@@ -239,10 +239,39 @@ const currencies = new Map([
 ]);
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
+// MORE WAYS OF CREATING AND FILLING ARRAYS
+
+const x = new Array(7);
+// console.log(x);
+// fill method
+// x.fill(1);
+x.fill(1, 3, 5);
+// console.log(x);
+// fill also works with other arrays and it kinda work like .push method but you can select the index
+
+// Array .from constructor create arrays from array like values
+const y = Array.from({ length: 7 }, () => 1);
+// console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+// console.log(z);
+
+const randomDice = Array.from({ length: 100 }, (_, i) =>
+  Math.trunc(i + Math.random() * 100)
+);
+// console.log(randomDice);
+
+labelBalance.addEventListener("click", function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll(".movements__value")
+  );
+  console.log(movementsUI);
+});
+
 //SORTING ARRAYS
 const owners = ["jonas", "zach", "adam", "martha"];
 // this will modified the original array and only works in strings
-console.log(owners.sort());
+// console.log(owners.sort());
 
 // numbers wont work
 
