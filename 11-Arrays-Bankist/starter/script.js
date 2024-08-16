@@ -229,6 +229,26 @@ const currencies = new Map([
 ]);
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
+// FLAT AND FLATMAP METHODS
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3, [4, [4, 6]], 7, 8]];
+console.log(arrDeep.flat(2));
+
+const accountMovements = accounts
+  .map((acc) => acc.movements)
+  .flat()
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(accountMovements);
+
+//FLATMAP
+const accountMovements2 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(accountMovements2);
+
 // SOME AND EVERY METHOD
 
 // equility
@@ -237,7 +257,7 @@ movements.includes(-130);
 const anyDeposits = movements.some((mov) => mov > 1500);
 
 // every only returns true if all the elements are true
-movements.every((mov)=> mov > 0)
+movements.every((mov) => mov > 0);
 
 // THE .FIND METHOD
 // ONLY RETURNS THE RESULT OF THE FIND AND NOT A NE ARRAY ALSO IT IS ONLY THE FIRST ELEMENT THAT FINDS ONLY
