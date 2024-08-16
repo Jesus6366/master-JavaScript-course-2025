@@ -297,3 +297,7 @@ btnSort.addEventListener('click', function (e) {
 // const isEven = n => n % 2 === 0;
 // console.log(isEven(8));
 // console.log(isEven(23));
+
+// NUMERIC SEPARATORS the underscore will act for us as a coma but will be ignored by the browser
+// const diamater = 287_460_000_000;
+// console.log(diamater);
