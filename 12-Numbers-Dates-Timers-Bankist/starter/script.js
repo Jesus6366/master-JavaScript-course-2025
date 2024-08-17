@@ -311,3 +311,30 @@ btnSort.addEventListener('click', function (e) {
 
 // // operations
 // console.log(10000n + 10000n);
+
+//DATES AND TIMES
+// CREATE A DATE 4 WAYS
+// const now = new Date();
+// console.log(now);
+
+// console.log(new Date('Fri Aug 16 2024 19:40:25 '));
+// console.log(new Date('December 24,2015'));
+// console.log(new Date(2037, 10, 19, 26, 3, 5));
+
+// working with dates
+
+// const future = new Date(2037, 10, 19, 15, 23);
+// console.log(future);
+// console.log(future.getFullYear());
+// console.log(future.getMonth());
+// console.log(future.getDate());
+// console.log(future.getDay());
+// console.log(future.getHours());
+// console.log(future.getMinutes());
+// console.log(future.getSeconds());
+// console.log(future.toISOString());
+// console.log(future.getTime());
+// // also excist set for all the previous methods
+
+// // timestamp
+// console.log(Date.now());
