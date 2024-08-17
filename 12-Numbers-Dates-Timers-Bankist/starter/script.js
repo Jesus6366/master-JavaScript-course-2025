@@ -301,3 +301,13 @@ btnSort.addEventListener('click', function (e) {
 // NUMERIC SEPARATORS the underscore will act for us as a coma but will be ignored by the browser
 // const diamater = 287_460_000_000;
 // console.log(diamater);
+
+// PRIMITIVE DATA TYPE BIGINT
+// console.log(2 ** 53 - 1); // max number to work
+// console.log(Number.MAX_SAFE_INTEGER);
+// // big int cannot be use with regular numbers
+// console.log(646546546546464643213216549884987996546n);
+// console.log(BigInt(646546546546464643213216549884987996546));
+
+// // operations
+// console.log(10000n + 10000n);
