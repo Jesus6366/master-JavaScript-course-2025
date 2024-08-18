@@ -156,3 +156,23 @@ document.addEventListener("keydown", function (e) {
 // // h1.onmouseenter = function (e) {
 // //   alert("addEventListener : Great! you are reading the heading ");
 // };
+
+// bubling and event propagation in practice
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (mix - min + 1) + min);
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+// bubbling starts
+document.querySelector(".nav__link").addEventListener("click", function (e) {
+  this.style.backgroundColor = randomColor();
+  // stop the propagation in general is not a good idea
+  e.stopPropagation();
+});
+// then triggers this parent
+document
+  .querySelector(".nav__links")
+  .addEventListener("click", function (e) {});
+// last triggers this other parent making the 3 change colors
+document.querySelector(".nav").addEventListener("click", function (e) {});
