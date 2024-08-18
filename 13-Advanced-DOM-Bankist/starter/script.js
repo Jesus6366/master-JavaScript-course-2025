@@ -114,25 +114,45 @@ document.addEventListener("keydown", function (e) {
 // logo.classList.toggle("c");
 // logo.classList.contains("c");
 
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
+// const btnScrollTo = document.querySelector(".btn--scroll-to");
+// const section1 = document.querySelector("#section--1");
 
-btnScrollTo.addEventListener("click", function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  console.log(s1coords);
+// btnScrollTo.addEventListener("click", function (e) {
+//   const s1coords = section1.getBoundingClientRect();
+//   console.log(s1coords);
 
-  //scrolling
-  // window.scrollTo(
-  //   s1coords.left + window.scrollX,
-  //   s1coords.top + window.scrollY
-  // );
-  // // old school way
-  // window.scrollTo({
-  //   left: s1coords.left + window.scrollX,
-  //   top: s1coords.top + window.scrollY,
-  //   behavior: "smooth",
-  // });
+//   //scrolling
+//   // window.scrollTo(
+//   //   s1coords.left + window.scrollX,
+//   //   s1coords.top + window.scrollY
+//   // );
+//   // // old school way
+//   // window.scrollTo({
+//   //   left: s1coords.left + window.scrollX,
+//   //   top: s1coords.top + window.scrollY,
+//   //   behavior: "smooth",
+//   // });
 
-  // new way
-  section1.scrollIntoView({ behavior: "smooth" });
-});
+//   // new way
+//   section1.scrollIntoView({ behavior: "smooth" });
+// });
+
+// // types of events and event handlers
+// const h1 = document.querySelector("h1");
+
+// const alerth1 = function (e) {
+//   alert("addEventListener : Great! you are reading the heading ");
+//   // remove it after it happened
+//   // h1.removeEventListener("mouseenter", alerth1);
+// };
+
+// // is like mouse hover in css
+// h1.addEventListener("mouseenter", alerth1);
+
+// // setTimeout(() => h1.removeEventListener("mouseenter", alerth1), 5000);
+
+// // another way of attaching eventlistneres
+// // old school
+// // h1.onmouseenter = function (e) {
+// //   alert("addEventListener : Great! you are reading the heading ");
+// };
