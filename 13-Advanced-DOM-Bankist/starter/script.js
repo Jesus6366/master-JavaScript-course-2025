@@ -1,12 +1,14 @@
 "use strict";
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
+///////////////////////////////////////
+// Modal window
 
 const openModal = function (e) {
   e.preventDefault();
@@ -27,6 +29,50 @@ overlay.addEventListener("click", closeModal);
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape" && !modal.classList.contains("hidden")) {
     closeModal();
+  }
+});
+
+// button scrolling
+
+btnScrollTo.addEventListener("click", function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  // console.log(s1coords);
+
+  //scrolling
+  // window.scrollTo(
+  //   s1coords.left + window.scrollX,
+  //   s1coords.top + window.scrollY
+  // );
+  // // old school way
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top: s1coords.top + window.scrollY,
+  //   behavior: "smooth",
+  // });
+
+  // new way
+  section1.scrollIntoView({ behavior: "smooth" });
+});
+
+/////////////////////////////////////////////PAGE NAVIGATION
+// without event delegation / propagation
+// document.querySelectorAll(".nav__link").forEach((el) => {
+//   el.addEventListener("click", function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute("href");
+//     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+//   });
+// });
+
+// with event delegation
+// 1. add event listener to common parent element
+//2. determine what element originated the event
+document.querySelector(".nav__links").addEventListener("click", (e) => {
+  e.preventDefault();
+  // matching strategy
+  if (e.target.classList.contains("nav__link")) {
+    const id = e.target.getAttribute("href");
+    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
   }
 });
 
@@ -114,29 +160,6 @@ document.addEventListener("keydown", function (e) {
 // logo.classList.toggle("c");
 // logo.classList.contains("c");
 
-// const btnScrollTo = document.querySelector(".btn--scroll-to");
-// const section1 = document.querySelector("#section--1");
-
-// btnScrollTo.addEventListener("click", function (e) {
-//   const s1coords = section1.getBoundingClientRect();
-//   console.log(s1coords);
-
-//   //scrolling
-//   // window.scrollTo(
-//   //   s1coords.left + window.scrollX,
-//   //   s1coords.top + window.scrollY
-//   // );
-//   // // old school way
-//   // window.scrollTo({
-//   //   left: s1coords.left + window.scrollX,
-//   //   top: s1coords.top + window.scrollY,
-//   //   behavior: "smooth",
-//   // });
-
-//   // new way
-//   section1.scrollIntoView({ behavior: "smooth" });
-// });
-
 // // types of events and event handlers
 // const h1 = document.querySelector("h1");
 
@@ -157,22 +180,22 @@ document.addEventListener("keydown", function (e) {
 // //   alert("addEventListener : Great! you are reading the heading ");
 // };
 
-// bubling and event propagation in practice
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (mix - min + 1) + min);
+// // bubling and event propagation in practice
+// const randomInt = (min, max) =>
+//   Math.floor(Math.random() * (mix - min + 1) + min);
 
-const randomColor = () =>
-  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+// const randomColor = () =>
+//   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
 
-// bubbling starts
-document.querySelector(".nav__link").addEventListener("click", function (e) {
-  this.style.backgroundColor = randomColor();
-  // stop the propagation in general is not a good idea
-  e.stopPropagation();
-});
-// then triggers this parent
-document
-  .querySelector(".nav__links")
-  .addEventListener("click", function (e) {});
-// last triggers this other parent making the 3 change colors
-document.querySelector(".nav").addEventListener("click", function (e) {});
+// // bubbling starts
+// document.querySelector(".nav__link").addEventListener("click", function (e) {
+//   this.style.backgroundColor = randomColor();
+//   // stop the propagation in general is not a good idea
+//   e.stopPropagation();
+// });
+// // then triggers this parent
+// document
+//   .querySelector(".nav__links")
+//   .addEventListener("click", function (e) {});
+// // last triggers this other parent making the 3 change colors
+// document.querySelector(".nav").addEventListener("click", function (e) {});
