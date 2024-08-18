@@ -78,3 +78,38 @@ message
     // THIS THE OLD WAY
     message.parentElement.removeChild(message);
   });
+
+//STYLES
+message.style.backgroundColor = "#37383d";
+message.style.width = "120%";
+
+// to read the styles
+// console.log(getComputedStyle(message).color);
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + "px";
+
+// to modify a style variable
+// document.documentElement.style.setProperty("--color-primary", "orangered");
+
+//ATRIBUTES
+// LIKE, SRC, CLASS ETC. only excisted ones no created ones or added
+const logo = document.querySelector(".nav__logo");
+console.log(logo.alt);
+console.log(logo.src);
+console.log(logo.className);
+
+logo.alt = "Beautiful minimalist logo";
+// to add attibutes
+logo.setAttribute("company", "Bankist");
+// to read added atributes
+console.log(logo.getAttribute("company"));
+// to get the relative link
+console.log(logo.getAttribute("src"));
+
+// CLASSES
+// you can add multiple classes "c","j" etc...
+logo.classList.add("c");
+logo.classList.remove("c");
+logo.classList.toggle("c");
+logo.classList.contains("c");
