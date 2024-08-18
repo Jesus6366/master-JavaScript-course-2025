@@ -199,3 +199,42 @@ document.querySelector(".nav__links").addEventListener("click", (e) => {
 //   .addEventListener("click", function (e) {});
 // // last triggers this other parent making the 3 change colors
 // document.querySelector(".nav").addEventListener("click", function (e) {});
+
+// //DOM TRAVERSING
+// const h1 = document.querySelector("h1");
+
+// // GOING DOWNWARDS: CHILD
+
+// console.log(h1.querySelectorAll(".highlight"));
+// // not that used
+// console.log(h1.childNodes);
+// // most common
+// console.log(h1.children);
+
+// h1.firstElementChild.style.color = "white";
+// h1.lastElementChild.style.color = "orangered";
+
+// // GOING UPWARDS: PARENTS
+
+// // direct parent
+// console.log(h1.parentNode);
+// // the most commonly used
+// console.log(h1.parentElement);
+
+// // is like queryselectorall but for parents
+// // not direct parent
+// h1.closest(".header").style.background = "var(--gradient-secondary)";
+// // the closest is going to be the same element h1
+// h1.closest("h1").style.background = "var(--gradient-primary)";
+
+// // GOING SIDEWAYS SIBLINGS
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+
+// // going up to the parent and then the children all the siblings
+// console.log(h1.parentElement.children);
+// [...h1.parentElement.children].forEach((el) => {
+//   if (el !== h1) {
+//     el.style.transform = "scale(1.5)";
+//   }
+// });
