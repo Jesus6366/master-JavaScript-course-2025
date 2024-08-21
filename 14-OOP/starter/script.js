@@ -35,3 +35,21 @@ matilda.calcAge();
 
 Person.prototype.species = "Homo Sapiens";
 console.log(jesus.species, matilda);
+
+console.log(jesus.__proto__);
+// object.prototype top of the prototype chain
+console.log(jesus.__proto__.__proto__);
+
+const arr = [3, 6, 4, 5, 6, 9, 3, 9, 9]; // new Array // constructor //
+
+console.log(arr.__proto__);
+console.log(arr.__proto__ === Array.prototype);
+
+// dont do it
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+
+console.log(arr.unique());
+
+const h1 = document.querySelector("h1");
