@@ -130,7 +130,7 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
-// static method, only accesible by the Object but not by the prototype
+  // static method, only accesible by the Object but not by the prototype
   static hey() {
     console.log("HEY!!!!!!!");
   }
@@ -165,3 +165,24 @@ accounst.latest = 50;
 
 console.log(accounst.movements);
 PersonCl.hey();
+
+/////////////////////////////////////////////////OBJECT.CREATE////////////////////////////////////////////////
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+console.log(steven);
+
+const sarah = Object.create(PersonProto);
+
+sarah.init("Sarah", 1996);
+
+console.log(sarah);
