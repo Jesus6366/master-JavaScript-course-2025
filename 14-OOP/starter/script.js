@@ -24,3 +24,14 @@ const matilda = new Person("Matilda", 2017);
 const jack = new Person("Jack", 1975);
 
 console.log(jesus instanceof Person);
+
+// PROTOTYPES to add methods or properties to the constructor by prototypal inheritance
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+jesus.calcAge();
+matilda.calcAge();
+
+Person.prototype.species = "Homo Sapiens";
+console.log(jesus.species, matilda);
