@@ -1,17 +1,17 @@
- "use strict";
+"use strict";
 // // CONSTRUCTOR FUNCTION
 // // always start with capital letters
 // // an arrow function wont work
-// const Person = function (firstName, birthYear) {
-//   // instance properties
-//   this.firstName = firstName;
-//   this.birthYear = birthYear;
+const Person = function (firstName, birthYear) {
+  // instance properties
+  this.firstName = firstName;
+  this.birthYear = birthYear;
 
-//   //methods never created like this
-//   //   this.calcAge = function () {
-//   //     console.log(2037 - this.birthYear);
-//   //   };
-// };
+  //methods never created like this
+  //   this.calcAge = function () {
+  //     console.log(2037 - this.birthYear);
+  //   };
+};
 
 // const jesus = new Person("Jesus", 1990);
 // console.log(jesus);
@@ -22,6 +22,12 @@
 // //4. functions automatically return {}
 // const matilda = new Person("Matilda", 2017);
 // const jack = new Person("Jack", 1975);
+
+Person.hey = function () {
+  console.log("Hey there");
+};
+
+Person.hey();
 
 // console.log(jesus instanceof Person);
 
@@ -124,6 +130,10 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+// static method, only accesible by the Object but not by the prototype
+  static hey() {
+    console.log("HEY!!!!!!!");
+  }
 }
 
 const jessica = new PersonCl("Jessica Davis", 1996);
@@ -154,3 +164,4 @@ const accounst = {
 accounst.latest = 50;
 
 console.log(accounst.movements);
+PersonCl.hey();
