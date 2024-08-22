@@ -235,41 +235,41 @@ GOOD LUCK 😀
 
 //////////////// INHERITANCE BETWEEN CLASSES CONTRUCTOR FUNCTION
 
-const Person = function (firstName, birthYear) {
-  // instance properties
-  this.firstName = firstName;
-  this.birthYear = birthYear;
-};
+// const Person = function (firstName, birthYear) {
+//   // instance properties
+//   this.firstName = firstName;
+//   this.birthYear = birthYear;
+// };
 
-Person.prototype.calcAge = function () {
-  console.log(2037 - this.birthYear);
-};
-// child object
-const Student = function (firstName, birthYear, course) {
-  Person.call(this, firstName, birthYear);
-  this.course = course;
-};
+// Person.prototype.calcAge = function () {
+//   console.log(2037 - this.birthYear);
+// };
+// // child object
+// const Student = function (firstName, birthYear, course) {
+//   Person.call(this, firstName, birthYear);
+//   this.course = course;
+// };
 
-// here we are making the person.prototype be the prototype of student by inheritance
-// creating the conexion:
-Student.prototype = Object.create(Person.prototype);
+// // here we are making the person.prototype be the prototype of student by inheritance
+// // creating the conexion:
+// Student.prototype = Object.create(Person.prototype);
 
-Student.prototype.introduce = function () {
-  console.log(`My name is ${this.firstName} and i study ${this.course}`);
-};
+// Student.prototype.introduce = function () {
+//   console.log(`My name is ${this.firstName} and i study ${this.course}`);
+// };
 
-const mike = new Student("Mike", 2020, "Computer Science");
-mike.introduce();
-// here js first will look into student prototype and then in person prototype
-mike.calcAge();
+// const mike = new Student("Mike", 2020, "Computer Science");
+// mike.introduce();
+// // here js first will look into student prototype and then in person prototype
+// mike.calcAge();
 
-console.log(mike instanceof Student);
-console.log(mike instanceof Person);
-console.log(mike instanceof Object);
+// console.log(mike instanceof Student);
+// console.log(mike instanceof Person);
+// console.log(mike instanceof Object);
 
-// making the student constructor go back to its original constructor
-Student.prototype.constructor = Student;
-console.log(mike);
+// // making the student constructor go back to its original constructor
+// Student.prototype.constructor = Student;
+// console.log(mike);
 
 ///////////////////////////////////////
 // Coding Challenge #3
@@ -285,45 +285,97 @@ DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
 GOOD LUCK 😀
 */
 
-const Car = function (make, speed) {
-  this.make = make;
-  this.speed = speed;
-};
+// const Car = function (make, speed) {
+//   this.make = make;
+//   this.speed = speed;
+// };
 
-Car.prototype.accelerate = function () {
-  this.speed += 10;
-  console.log(`${this.make} is going at ${this.speed} km/h`);
-};
+// Car.prototype.accelerate = function () {
+//   this.speed += 10;
+//   console.log(`${this.make} is going at ${this.speed} km/h`);
+// };
 
-Car.prototype.brake = function () {
-  this.speed -= 5;
-  console.log(`${this.make} is going at ${this.speed} km/h`);
-};
+// Car.prototype.brake = function () {
+//   this.speed -= 5;
+//   console.log(`${this.make} is going at ${this.speed} km/h`);
+// };
 
-const EV = function (make, speed, charge) {
-  Car.call(this, make, speed);
-  this.charge = charge;
-};
+// const EV = function (make, speed, charge) {
+//   Car.call(this, make, speed);
+//   this.charge = charge;
+// };
 
-EV.prototype = Object.create(Car.prototype);
-EV.prototype.constructor = Car;
+// EV.prototype = Object.create(Car.prototype);
+// EV.prototype.constructor = Car;
 
-// create the new car
-const EvCar = new EV("Tesla", 120, 23);
+// // create the new car
+// const EvCar = new EV("Tesla", 120, 23);
 
-Car.prototype.chargeBattery = function (chargeTo) {
-  this.charge = chargeTo;
-};
+// Car.prototype.chargeBattery = function (chargeTo) {
+//   this.charge = chargeTo;
+// };
 
-EV.prototype.accelerate = function () {
-  this.speed += 20;
-  this.charge -= 1;
-  console.log(
-    `${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}%`
-  );
-};
+// EV.prototype.accelerate = function () {
+//   this.speed += 20;
+//   this.charge -= 1;
+//   console.log(
+//     `${this.make} going at ${this.speed} km/h, with a charge of ${this.charge}%`
+//   );
+// };
 
-EvCar.chargeBattery(90);
-console.log(EvCar);
-EvCar.brake();
-EvCar.accelerate();
+// EvCar.chargeBattery(90);
+// console.log(EvCar);
+// EvCar.brake();
+// EvCar.accelerate();
+
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+  // this will be in the prototype if its outside of the constructor .prototype
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  // set a property that already exist
+  set fullName(name) {
+    if (name.includes(" ")) {
+      return (this._fullName = name);
+    } else {
+      alert(`The ${name} is not a full name`);
+    }
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+  // static method, only accesible by the Object but not by the prototype
+  static hey() {
+    console.log("HEY!!!!!!!");
+  }
+}
+
+///////////////////////// INHERITANCE BETWEEN CLASSES ES6
+class StudentClass extends PersonCl {
+  constructor(fullName, birthYear, course) {
+    // super is the constructor function of the inherited prototype
+    // always needs to happen first!! this create the this keyword
+    super(fullName, birthYear);
+    this.course = course;
+  }
+  introduce() {
+    console.log(`My name is ${this.fullName} and i study ${this.course}`);
+  }
+  calcAge() {
+    console.log("iam ");
+  }
+}
+
+const martha = new StudentClass("Martha Jones", 2012, "Computer Science");
+martha.introduce();
+martha.calcAge();
