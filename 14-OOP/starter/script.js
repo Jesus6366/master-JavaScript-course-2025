@@ -416,24 +416,29 @@ class Account {
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
+    // protected property the _ is just for people to know not to use
+    this._pin = pin;
+    this._movements = [];
+
     this.locale = navigator.language;
+  }
+  getMovements() {
+    return this._movements;
   }
   // public interface
   deposit(val) {
-    this.movements.push(val);
+    this._movements.push(val);
   }
   withdraw(val) {
     this.deposit(-val);
   }
 
-  approveLoan(val) {
+  _approveLoan(val) {
     return true;
   }
 
   requestLoan(val) {
-    if (this.approveLoan(val)) {
+    if (this._approveLoan(val)) {
       this.deposit(val);
       console.log("Loan approved");
     }
