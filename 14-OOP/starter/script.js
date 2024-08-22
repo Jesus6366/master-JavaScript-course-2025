@@ -442,15 +442,18 @@ class Account {
   // public interface
   deposit(val) {
     this.#movements.push(val);
+    return this;
   }
   withdraw(val) {
     this.deposit(-val);
+    return this;
   }
 
   requestLoan(val) {
     if (this.#approveLoan(val)) {
       this.deposit(val);
       console.log("Loan approved");
+      return this;
     }
   }
 
@@ -469,3 +472,7 @@ act1.withdraw(140);
 // console.log(act1.#pin);
 
 // console.log(act1.#approveLoan(200));
+
+///////////////Chaining/////////
+
+act1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000);
