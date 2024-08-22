@@ -328,54 +328,86 @@ GOOD LUCK 😀
 // EvCar.brake();
 // EvCar.accelerate();
 
-class PersonCl {
-  constructor(fullName, birthYear) {
-    this.fullName = fullName;
-    this.birthYear = birthYear;
-  }
-  // this will be in the prototype if its outside of the constructor .prototype
+// class PersonCl {
+//   constructor(fullName, birthYear) {
+//     this.fullName = fullName;
+//     this.birthYear = birthYear;
+//   }
+//   // this will be in the prototype if its outside of the constructor .prototype
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   }
+
+//   get age() {
+//     return 2037 - this.birthYear;
+//   }
+
+//   // set a property that already exist
+//   set fullName(name) {
+//     if (name.includes(" ")) {
+//       return (this._fullName = name);
+//     } else {
+//       alert(`The ${name} is not a full name`);
+//     }
+//   }
+
+//   get fullName() {
+//     return this._fullName;
+//   }
+//   // static method, only accesible by the Object but not by the prototype
+//   static hey() {
+//     console.log("HEY!!!!!!!");
+//   }
+// }
+
+// ///////////////////////// INHERITANCE BETWEEN CLASSES ES6
+// class StudentClass extends PersonCl {
+//   constructor(fullName, birthYear, course) {
+//     // super is the constructor function of the inherited prototype
+//     // always needs to happen first!! this create the this keyword
+//     super(fullName, birthYear);
+//     this.course = course;
+//   }
+//   introduce() {
+//     console.log(`My name is ${this.fullName} and i study ${this.course}`);
+//   }
+//   calcAge() {
+//     console.log("iam ");
+//   }
+// }
+
+// const martha = new StudentClass("Martha Jones", 2012, "Computer Science");
+// martha.introduce();
+// martha.calcAge();
+
+///////////////// INHERITANCE BETWEEN OBJECT.CREATE ///////////////////////////
+
+const PersonProto = {
   calcAge() {
     console.log(2037 - this.birthYear);
-  }
+  },
 
-  get age() {
-    return 2037 - this.birthYear;
-  }
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
 
-  // set a property that already exist
-  set fullName(name) {
-    if (name.includes(" ")) {
-      return (this._fullName = name);
-    } else {
-      alert(`The ${name} is not a full name`);
-    }
-  }
+const steven = Object.create(PersonProto);
 
-  get fullName() {
-    return this._fullName;
-  }
-  // static method, only accesible by the Object but not by the prototype
-  static hey() {
-    console.log("HEY!!!!!!!");
-  }
-}
+const StudentProto = Object.create(PersonProto);
 
-///////////////////////// INHERITANCE BETWEEN CLASSES ES6
-class StudentClass extends PersonCl {
-  constructor(fullName, birthYear, course) {
-    // super is the constructor function of the inherited prototype
-    // always needs to happen first!! this create the this keyword
-    super(fullName, birthYear);
-    this.course = course;
-  }
-  introduce() {
-    console.log(`My name is ${this.fullName} and i study ${this.course}`);
-  }
-  calcAge() {
-    console.log("iam ");
-  }
-}
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
 
-const martha = new StudentClass("Martha Jones", 2012, "Computer Science");
-martha.introduce();
-martha.calcAge();
+  this.course = course;
+};
+
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and i study ${this.course}`);
+};
+
+const jay = Object.create(StudentProto);
+jay.init("jay", 2010, "computer science");
+jay.introduce();
+jay.calcAge();
