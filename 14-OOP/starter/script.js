@@ -382,32 +382,65 @@ GOOD LUCK 😀
 
 ///////////////// INHERITANCE BETWEEN OBJECT.CREATE ///////////////////////////
 
-const PersonProto = {
-  calcAge() {
-    console.log(2037 - this.birthYear);
-  },
+// const PersonProto = {
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   },
 
-  init(firstName, birthYear) {
-    this.firstName = firstName;
-    this.birthYear = birthYear;
-  },
-};
+//   init(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   },
+// };
 
-const steven = Object.create(PersonProto);
+// const steven = Object.create(PersonProto);
 
-const StudentProto = Object.create(PersonProto);
+// const StudentProto = Object.create(PersonProto);
 
-StudentProto.init = function (firstName, birthYear, course) {
-  PersonProto.init.call(this, firstName, birthYear);
+// StudentProto.init = function (firstName, birthYear, course) {
+//   PersonProto.init.call(this, firstName, birthYear);
 
-  this.course = course;
-};
+//   this.course = course;
+// };
 
-StudentProto.introduce = function () {
-  console.log(`My name is ${this.firstName} and i study ${this.course}`);
-};
+// StudentProto.introduce = function () {
+//   console.log(`My name is ${this.firstName} and i study ${this.course}`);
+// };
 
-const jay = Object.create(StudentProto);
-jay.init("jay", 2010, "computer science");
-jay.introduce();
-jay.calcAge();
+// const jay = Object.create(StudentProto);
+// jay.init("jay", 2010, "computer science");
+// jay.introduce();
+// jay.calcAge();
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+  }
+  // public interface
+  deposit(val) {
+    this.movements.push(val);
+  }
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log("Loan approved");
+    }
+  }
+}
+
+const act1 = new Account("Jonas", "EUR", 1111);
+
+act1.deposit(250);
+act1.withdraw(140);
