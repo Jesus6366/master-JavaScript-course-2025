@@ -412,36 +412,51 @@ GOOD LUCK 😀
 // jay.introduce();
 // jay.calcAge();
 
+////////////PUBLIC FIELDS
+////////////PRIVATE FIELDS
+///////////PUBLIC METHODS
+///////////PRIVATE METHODS
+
 class Account {
+  //PUBLIC FIELDS
+  locale = navigator.language;
+
+  //PRIVATE FIELDS // wont be able to acces it outside of the class
+  #movements = [];
+  #pin;
+
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
     // protected property the _ is just for people to know not to use
-    this._pin = pin;
-    this._movements = [];
+    this.#pin = pin;
+    this.#movements = [];
 
-    this.locale = navigator.language;
+    // this.locale = navigator.language;
   }
+
+  // PUBLIC METHODS
   getMovements() {
-    return this._movements;
+    return this.#movements;
   }
   // public interface
   deposit(val) {
-    this._movements.push(val);
+    this.#movements.push(val);
   }
   withdraw(val) {
     this.deposit(-val);
   }
 
-  _approveLoan(val) {
-    return true;
-  }
-
   requestLoan(val) {
-    if (this._approveLoan(val)) {
+    if (this.#approveLoan(val)) {
       this.deposit(val);
       console.log("Loan approved");
     }
+  }
+
+  //// PRIVATE METHODS
+  #approveLoan(val) {
+    return true;
   }
 }
 
@@ -449,3 +464,8 @@ const act1 = new Account("Jonas", "EUR", 1111);
 
 act1.deposit(250);
 act1.withdraw(140);
+
+// console.log(act1.#movements);
+// console.log(act1.#pin);
+
+// console.log(act1.#approveLoan(200));
