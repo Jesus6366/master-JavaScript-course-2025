@@ -251,22 +251,31 @@ TEST COORDINATES 2: -33.933, 18.474
 GOOD LUCK 😀
 */
 
-const whereAmI = function (lat, lng) {
-  fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
-    .then((response) => {
-      console.log(response);
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      if (data.city === "Throttled! See geocode.xyz/pricing") {
-        throw new Error("You clicked to many times ");
-      }
+// const whereAmI = function (lat, lng) {
+//   fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+//     .then((response) => {
+//       console.log(response);
+//       return response.json();
+//     })
+//     .then((data) => {
+//       console.log(data);
+//       if (data.city === "Throttled! See geocode.xyz/pricing") {
+//         throw new Error("You clicked to many times ");
+//       }
 
-      console.log(`Your are in ${data.city}, ${data.country}`);
-      getCountryData(data.country);
-    })
-    .catch((err) => console.log(err));
-};
+//       console.log(`Your are in ${data.city}, ${data.country}`);
+//       getCountryData(data.country);
+//     })
+//     .catch((err) => console.log(err));
+// };
 
-whereAmI(52.508, 13.381);
+// whereAmI(52.508, 13.381);
+
+// call stack
+console.log("Test Start ");
+// call back quoe
+setTimeout(() => console.log("0 sec timer", 0));
+// microtasks quoe promises
+Promise.resolve("Resolved promise 1").then((res) => console.log(res));
+// call stack
+console.log("Test End");
