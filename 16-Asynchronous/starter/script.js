@@ -117,8 +117,30 @@ const renderCountry = function (data, className = "") {
 
 //////////////////////////NEW FETCH WAY OF DOING IT PROMISES ////////////////////////////////////
 
-const request = fetch(
-  "https://countries-api-836d.onrender.com/countries/name/portugal"
-);
+// const request = fetch(
+//   "https://countries-api-836d.onrender.com/countries/name/portugal"
+// );
+
+// const getCountryData = function (country) {
+//   // fetch function returns a promise
+//   fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`)
+//     // handle the first promise and the response returns another promise
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     // handle the first then promise data
+//     .then((data) => {
+//       console.log(data);
+//       renderCountry(data[0]);
+//     });
+// };
+
+const getCountryData = function (country) {
+  fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`)
+    .then((response) => response.json())
+    .then((data) => renderCountry(data[0]));
+};
+
+getCountryData("portugal");
 
 console.log(request);
