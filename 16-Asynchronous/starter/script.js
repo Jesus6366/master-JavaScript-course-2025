@@ -271,11 +271,45 @@ GOOD LUCK 😀
 
 // whereAmI(52.508, 13.381);
 
-// call stack
-console.log("Test Start ");
-// call back quoe
-setTimeout(() => console.log("0 sec timer", 0));
-// microtasks quoe promises
-Promise.resolve("Resolved promise 1").then((res) => console.log(res));
-// call stack
-console.log("Test End");
+// // call stack
+// console.log("Test Start ");
+// // call back quoe
+// setTimeout(() => console.log("0 sec timer", 0));
+// // microtasks quoe promises
+// Promise.resolve("Resolved promise 1").then((res) => console.log(res));
+// // call stack
+// console.log("Test End");
+
+/// builgind a simple promise
+// the funcions is the executer
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log("Lotter draw is happening");
+
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      // the response
+      resolve("You WIN 🎉");
+    } else {
+      // the error response
+      reject(new Error("You lost your money "));
+    }
+  }, 2000);
+});
+
+lotteryPromise
+  .then((res) => console.log(res))
+  .catch((err) => console.error(err));
+
+// promisifyin setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(2)
+  .then(() => {
+    console.log("I waited for 2 seconds ");
+    return wait(1);
+  })
+  .then(() => "I waited for 1 second");
