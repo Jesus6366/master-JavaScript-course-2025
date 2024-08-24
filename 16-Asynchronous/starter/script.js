@@ -140,21 +140,75 @@ const renderCountry = function (data, className = "") {
 //     });
 // };
 
+const getJSON = function (url, errorMsg = "Something Wrong") {
+  return fetch(url).then((response) => {
+    if (!response.ok) {
+      throw new Error(`${errorMsg} (${response.status})`);
+    }
+    return response.json();
+  });
+};
+
+// const getCountryData = function (country) {
+//   // fetching country 1
+//   fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`)
+//     .then((response) => {
+//       console.log(response);
+
+//       if (!response.ok) {
+//         throw new Error(`Country not found (${response.status})`);
+//       }
+//       return response.json();
+//     })
+//     .then((data) => {
+//       renderCountry(data[0]);
+//       //   const neighbour = data[0].borders?.[0];
+//       const neighbour = "hasdasasd";
+//       console.log(neighbour);
+
+//       //fetching country 2 with chaining
+//       return fetch(
+//         `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`
+//       )
+//         .then((response) => {
+//           if (!response.ok) {
+//             throw new Error(`Country not found (${response.status})`);
+//           }
+//           return response.json();
+//         })
+//         .then((data) => renderCountry(data, "neighbour"));
+//     })
+//     .catch((err) => {
+//       console.error(`${err} 💥💥💥`);
+//       renderError(`Something went wrong 💥💥💥 ${err.message}. Try again!`);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+// };
+
 const getCountryData = function (country) {
   // fetching country 1
-  fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`)
-    .then((response) => response.json())
+  getJSON(
+    `https://countries-api-836d.onrender.com/countries/name/${country}`,
+    "Country not found"
+  )
     .then((data) => {
       renderCountry(data[0]);
       const neighbour = data[0].borders?.[0];
+
+      if (!neighbour) {
+        throw new Error("No neighbour found!");
+      }
+
       console.log(neighbour);
 
       //fetching country 2 with chaining
-      return fetch(
-        `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`
-      )
-        .then((response) => response.json())
-        .then((data) => renderCountry(data, "neighbour"));
+
+      return getJSON(
+        `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`,
+        "Country not found"
+      ).then((data) => renderCountry(data, "neighbour"));
     })
     .catch((err) => {
       console.error(`${err} 💥💥💥`);
@@ -168,4 +222,4 @@ btn.addEventListener("click", function () {
   getCountryData("mexico");
 });
 
-getCountryData("hashahshs");
+getCountryData("australia");
