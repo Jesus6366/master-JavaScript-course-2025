@@ -65,45 +65,60 @@ const renderCountry = function (data, className = "") {
   countriesContainer.style.opacity = 1;
 };
 
-const getCountryAndNeighbour = function (country) {
-  // ajax call country 1
-  const request = new XMLHttpRequest();
-  request.open(
-    "GET",
-    `https://countries-api-836d.onrender.com/countries/name/${country}`
-  );
-  request.send();
-  request.addEventListener("load", function () {
-    console.log(this.responseText);
+// const getCountryAndNeighbour = function (country) {
+//   // ajax call country 1
+//   const request = new XMLHttpRequest();
+//   request.open(
+//     "GET",
+//     `https://countries-api-836d.onrender.com/countries/name/${country}`
+//   );
+//   request.send();
+//   request.addEventListener("load", function () {
+//     console.log(this.responseText);
 
-    const [data] = JSON.parse(this.responseText);
-    console.log(data);
+//     const [data] = JSON.parse(this.responseText);
+//     console.log(data);
 
-    // render country 1
-    renderCountry(data);
+//     // render country 1
+//     renderCountry(data);
 
-    // get neighbour country 2
+//     // get neighbour country 2
 
-    const neighbour = data.borders?.[0];
+//     const neighbour = data.borders?.[0];
 
-    if (!neighbour) {
-      return;
-    }
+//     if (!neighbour) {
+//       return;
+//     }
 
-    // ajax call country 2
-    const request2 = new XMLHttpRequest();
-    request2.open(
-      "GET",
-      `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`
-    );
-    request2.send();
+//     // ajax call country 2
+//     const request2 = new XMLHttpRequest();
+//     request2.open(
+//       "GET",
+//       `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`
+//     );
+//     request2.send();
 
-    request2.addEventListener("load", function () {
-      const data2 = JSON.parse(this.responseText);
-      renderCountry(data2, "neighbour");
-    });
-  });
-};
+//     request2.addEventListener("load", function () {
+//       const data2 = JSON.parse(this.responseText);
+//       renderCountry(data2, "neighbour");
+//     });
+//   });
+// };
 
-// getCountryAndNeighbour("portugal");
-getCountryAndNeighbour("usa");
+// // getCountryAndNeighbour("portugal");
+// getCountryAndNeighbour("usa");
+
+// const request = new XMLHttpRequest()
+// request.open(
+//     "GET",
+//     `https://countries-api-836d.onrender.com/countries/name/${country}`
+//   );
+//   request.send();
+
+//////////////////////////NEW FETCH WAY OF DOING IT PROMISES ////////////////////////////////////
+
+const request = fetch(
+  "https://countries-api-836d.onrender.com/countries/name/portugal"
+);
+
+console.log(request);
