@@ -136,11 +136,21 @@ const renderCountry = function (data, className = "") {
 // };
 
 const getCountryData = function (country) {
+  // fetching country 1
   fetch(`https://countries-api-836d.onrender.com/countries/name/${country}`)
     .then((response) => response.json())
-    .then((data) => renderCountry(data[0]));
+    .then((data) => {
+      renderCountry(data[0]);
+      const neighbour = data[0].borders?.[0];
+      console.log(neighbour);
+
+      //fetching country 2 with chaining
+      return fetch(
+        `https://countries-api-836d.onrender.com/countries/alpha/${neighbour}`
+      )
+        .then((response) => response.json())
+        .then((data) => renderCountry(data, "neighbour"));
+    });
 };
 
-getCountryData("portugal");
-
-console.log(request);
+getCountryData("mexico");
