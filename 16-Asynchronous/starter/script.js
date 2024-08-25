@@ -455,31 +455,69 @@ GOOD LUCK 😀
 //   alert(error.message);
 // }
 
-///////////RUNNING PROMISES IN PARALLEL /////////////
-const get3Countries = async function (c1, c2, c3) {
-  try {
-    // const [data1] = await getJSON(
-    //   `https://countries-api-836d.onrender.com/countries/name/${c1}`
-    // );
-    // const [data2] = await getJSON(
-    //   `https://countries-api-836d.onrender.com/countries/name/${c2}`
-    // );
-    // const [data3] = await getJSON(
-    //   `https://countries-api-836d.onrender.com/countries/name/${c3}`
-    // );
-    // console.log([data1.capital, data2.capital, data3.capital]);
+// ///////////RUNNING PROMISES IN PARALLEL /////////////
+// const get3Countries = async function (c1, c2, c3) {
+//   try {
+//     // const [data1] = await getJSON(
+//     //   `https://countries-api-836d.onrender.com/countries/name/${c1}`
+//     // );
+//     // const [data2] = await getJSON(
+//     //   `https://countries-api-836d.onrender.com/countries/name/${c2}`
+//     // );
+//     // const [data3] = await getJSON(
+//     //   `https://countries-api-836d.onrender.com/countries/name/${c3}`
+//     // );
+//     // console.log([data1.capital, data2.capital, data3.capital]);
 
-    // PROMISE. ALL CONBINATOR
-    const data = await Promise.all([
-      getJSON(`https://countries-api-836d.onrender.com/countries/name/${c1}`),
-      getJSON(`https://countries-api-836d.onrender.com/countries/name/${c2}`),
-      getJSON(`https://countries-api-836d.onrender.com/countries/name/${c3}`),
-    ]);
+//     // PROMISE. ALL CONBINATOR
+//     const data = await Promise.all([
+//       getJSON(`https://countries-api-836d.onrender.com/countries/name/${c1}`),
+//       getJSON(`https://countries-api-836d.onrender.com/countries/name/${c2}`),
+//       getJSON(`https://countries-api-836d.onrender.com/countries/name/${c3}`),
+//     ]);
 
-    console.log(data.map((d) => d[0].capital));
-  } catch (error) {
-    console.log(error);
-  }
+//     console.log(data.map((d) => d[0].capital));
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// get3Countries("portugal", "canada", "tanzania");
+
+// promise combinators
+// promise.race
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://countries-api-836d.onrender.com/countries/name/italy`),
+    getJSON(`https://countries-api-836d.onrender.com/countries/name/egypt`),
+    getJSON(`https://countries-api-836d.onrender.com/countries/name/mexico`),
+  ]);
+  console.log(res[0]);
+})();
+
+const timeout = function (seconds) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error("request took too long"));
+    }, seconds * 1000);
+  });
 };
 
-get3Countries("portugal", "canada", "tanzania");
+Promise.race([
+  getJSON(`https://countries-api-836d.onrender.com/countries/name/mexico`),
+  timeout(0.1),
+]).then((res) => console.log(res[0]).catch((err) => console.log(err)));
+
+// promise.allSettled never shorcirtuit
+Promise.allSettled([
+  Promise.resolve("success"),
+  Promise.reject("error"),
+  Promise.resolve(" another success"),
+]).then((res) => console.log(res));
+
+// promise.any
+Promise.any([
+  Promise.resolve("success"),
+  Promise.reject("error"),
+  Promise.resolve(" another success"),
+]).then((res) => console.log(res));
