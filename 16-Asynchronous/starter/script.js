@@ -5,7 +5,7 @@ const countriesContainer = document.querySelector(".countries");
 
 const renderError = function (message) {
   countriesContainer.insertAdjacentText("beforeend", message);
-  //   countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 const renderCountry = function (data, className = "") {
@@ -27,7 +27,7 @@ const renderCountry = function (data, className = "") {
             </article>`;
 
   countriesContainer.insertAdjacentHTML("beforeEnd", html);
-  //   countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 ///////////////////////////////////////
@@ -373,27 +373,67 @@ GOOD LUCK 😀
 //   })
 //   .catch((err) => console.error(err));
 
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   (position) => resolve(position),
+    //   (err) => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
 /////////////////////// CONSUMING PROMISES WITH ASYNC / AWAIT //////////
 // the await is used to wait for the promise to be resolve just like with .then
 // is just sintatic sugar for .then
+// the same thing as this:
+//   fetch(
+//     `https://countries-api-836d.onrender.com/countries/name/${country}`
+//   ).then((res) => console.log(res));
 
 // async function
 const whereAmI = async function (country) {
-  // the same thing as this:
-  //   fetch(
-  //     `https://countries-api-836d.onrender.com/countries/name/${country}`
-  //   ).then((res) => console.log(res));.
+  try {
+    // await statement promise response first .then()
+    const pos = await getPosition();
+    const { latitude: lat, longitude: lng } = pos.coords;
 
-  // await statement promise response first .then()
-  const response = await fetch(
-    `https://countries-api-836d.onrender.com/countries/name/${country}`
-  );
+    // reverse geocoding
 
-  // to get the data second .then()
-  const data = await response.json();
+    const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    if (!resGeo.ok) {
+      throw new Error("problem getting location data");
+    }
+    const dataGeo = await resGeo.json();
 
-  renderCountry(data[0]);
+    const response = await fetch(
+      `https://countries-api-836d.onrender.com/countries/name/${dataGeo.country}`
+    );
+
+    if (!response.ok) {
+      throw new Error("problem getting country");
+    }
+
+    // to get the data second .then()
+    const data = await response.json();
+    console.log(data);
+
+    renderCountry(data[0]);
+  } catch (err) {
+    console.error(err);
+    renderError(` ${err.message}`);
+  }
 };
 
-whereAmI("mexico");
+whereAmI();
 console.log("FIRST before the async function");
+
+////////////////////////// HANDLING ERROR WITH TRY CATCH ///////////////////
+
+// try {
+//   let y = 1;
+//   const x = 2;
+//   x = 3;
+// } catch (error) {
+//   alert(error.message);
+// }
