@@ -416,17 +416,34 @@ const whereAmI = async function (country) {
 
     // to get the data second .then()
     const data = await response.json();
-    console.log(data);
-
     renderCountry(data[0]);
+
+    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
   } catch (err) {
-    console.error(err);
     renderError(` ${err.message}`);
+    // reject promise returned from async function
+    throw err;
   }
 };
 
-whereAmI();
-console.log("FIRST before the async function");
+console.log("1.will get location");
+// const city = whereAmI();
+
+// async function returning a promise
+// whereAmI()
+//   .then((city) => console.log(city))
+//   .catch((err) => console.log(err))
+//   .finally(() => console.log("3.finished getting location"));
+
+(async function () {
+  try {
+    const city = await whereAmI();
+    console.log(city);
+  } catch (error) {
+    console.error(error);
+  }
+  console.log("3.finished getting location");
+})();
 
 ////////////////////////// HANDLING ERROR WITH TRY CATCH ///////////////////
 
