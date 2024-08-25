@@ -351,24 +351,49 @@ TEST DATA: Images in the img folder. Test the error handler by passing a wrong i
 GOOD LUCK 😀
 */
 
-const imgContainer = document.querySelector(".images");
+// const imgContainer = document.querySelector(".images");
 
-const createImage = function (imagePath) {
-  return new Promise(function (resolve, reject) {
-    const img = document.createElement("img");
-    img.src = imagePath;
-    img.addEventListener("load", function () {
-      imgContainer.append(img);
-      resolve(img);
-    });
-    img.addEventListener("error", function () {
-      reject(new Error("image not found"));
-    });
-  });
+// const createImage = function (imagePath) {
+//   return new Promise(function (resolve, reject) {
+//     const img = document.createElement("img");
+//     img.src = imagePath;
+//     img.addEventListener("load", function () {
+//       imgContainer.append(img);
+//       resolve(img);
+//     });
+//     img.addEventListener("error", function () {
+//       reject(new Error("image not found"));
+//     });
+//   });
+// };
+
+// createImage("img/img-1.jpg")
+//   .then((img) => {
+//     console.log("image 1 loaded");
+//   })
+//   .catch((err) => console.error(err));
+
+/////////////////////// CONSUMING PROMISES WITH ASYNC / AWAIT //////////
+// the await is used to wait for the promise to be resolve just like with .then
+// is just sintatic sugar for .then
+
+// async function
+const whereAmI = async function (country) {
+  // the same thing as this:
+  //   fetch(
+  //     `https://countries-api-836d.onrender.com/countries/name/${country}`
+  //   ).then((res) => console.log(res));.
+
+  // await statement promise response first .then()
+  const response = await fetch(
+    `https://countries-api-836d.onrender.com/countries/name/${country}`
+  );
+
+  // to get the data second .then()
+  const data = await response.json();
+
+  renderCountry(data[0]);
 };
 
-createImage("img/img-1.jpg")
-  .then((img) => {
-    console.log("image 1 loaded");
-  })
-  .catch((err) => console.error(err));
+whereAmI("mexico");
+console.log("FIRST before the async function");
