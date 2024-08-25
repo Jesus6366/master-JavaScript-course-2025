@@ -373,77 +373,77 @@ GOOD LUCK 😀
 //   })
 //   .catch((err) => console.error(err));
 
-const getPosition = function () {
-  return new Promise(function (resolve, reject) {
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => resolve(position),
-    //   (err) => reject(err)
-    // );
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
-};
+// const getPosition = function () {
+//   return new Promise(function (resolve, reject) {
+//     // navigator.geolocation.getCurrentPosition(
+//     //   (position) => resolve(position),
+//     //   (err) => reject(err)
+//     // );
+//     navigator.geolocation.getCurrentPosition(resolve, reject);
+//   });
+// };
 
-/////////////////////// CONSUMING PROMISES WITH ASYNC / AWAIT //////////
-// the await is used to wait for the promise to be resolve just like with .then
-// is just sintatic sugar for .then
-// the same thing as this:
-//   fetch(
-//     `https://countries-api-836d.onrender.com/countries/name/${country}`
-//   ).then((res) => console.log(res));
+// /////////////////////// CONSUMING PROMISES WITH ASYNC / AWAIT //////////
+// // the await is used to wait for the promise to be resolve just like with .then
+// // is just sintatic sugar for .then
+// // the same thing as this:
+// //   fetch(
+// //     `https://countries-api-836d.onrender.com/countries/name/${country}`
+// //   ).then((res) => console.log(res));
 
-// async function
-const whereAmI = async function (country) {
-  try {
-    // await statement promise response first .then()
-    const pos = await getPosition();
-    const { latitude: lat, longitude: lng } = pos.coords;
+// // async function
+// const whereAmI = async function (country) {
+//   try {
+//     // await statement promise response first .then()
+//     const pos = await getPosition();
+//     const { latitude: lat, longitude: lng } = pos.coords;
 
-    // reverse geocoding
+//     // reverse geocoding
 
-    const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
-    if (!resGeo.ok) {
-      throw new Error("problem getting location data");
-    }
-    const dataGeo = await resGeo.json();
+//     const resGeo = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+//     if (!resGeo.ok) {
+//       throw new Error("problem getting location data");
+//     }
+//     const dataGeo = await resGeo.json();
 
-    const response = await fetch(
-      `https://countries-api-836d.onrender.com/countries/name/${dataGeo.country}`
-    );
+//     const response = await fetch(
+//       `https://countries-api-836d.onrender.com/countries/name/${dataGeo.country}`
+//     );
 
-    if (!response.ok) {
-      throw new Error("problem getting country");
-    }
+//     if (!response.ok) {
+//       throw new Error("problem getting country");
+//     }
 
-    // to get the data second .then()
-    const data = await response.json();
-    renderCountry(data[0]);
+//     // to get the data second .then()
+//     const data = await response.json();
+//     renderCountry(data[0]);
 
-    return `You are in ${dataGeo.city}, ${dataGeo.country}`;
-  } catch (err) {
-    renderError(` ${err.message}`);
-    // reject promise returned from async function
-    throw err;
-  }
-};
+//     return `You are in ${dataGeo.city}, ${dataGeo.country}`;
+//   } catch (err) {
+//     renderError(` ${err.message}`);
+//     // reject promise returned from async function
+//     throw err;
+//   }
+// };
 
-console.log("1.will get location");
-// const city = whereAmI();
+// console.log("1.will get location");
+// // const city = whereAmI();
 
-// async function returning a promise
-// whereAmI()
-//   .then((city) => console.log(city))
-//   .catch((err) => console.log(err))
-//   .finally(() => console.log("3.finished getting location"));
+// // async function returning a promise
+// // whereAmI()
+// //   .then((city) => console.log(city))
+// //   .catch((err) => console.log(err))
+// //   .finally(() => console.log("3.finished getting location"));
 
-(async function () {
-  try {
-    const city = await whereAmI();
-    console.log(city);
-  } catch (error) {
-    console.error(error);
-  }
-  console.log("3.finished getting location");
-})();
+// (async function () {
+//   try {
+//     const city = await whereAmI();
+//     console.log(city);
+//   } catch (error) {
+//     console.error(error);
+//   }
+//   console.log("3.finished getting location");
+// })();
 
 ////////////////////////// HANDLING ERROR WITH TRY CATCH ///////////////////
 
@@ -454,3 +454,32 @@ console.log("1.will get location");
 // } catch (error) {
 //   alert(error.message);
 // }
+
+///////////RUNNING PROMISES IN PARALLEL /////////////
+const get3Countries = async function (c1, c2, c3) {
+  try {
+    // const [data1] = await getJSON(
+    //   `https://countries-api-836d.onrender.com/countries/name/${c1}`
+    // );
+    // const [data2] = await getJSON(
+    //   `https://countries-api-836d.onrender.com/countries/name/${c2}`
+    // );
+    // const [data3] = await getJSON(
+    //   `https://countries-api-836d.onrender.com/countries/name/${c3}`
+    // );
+    // console.log([data1.capital, data2.capital, data3.capital]);
+
+    // PROMISE. ALL CONBINATOR
+    const data = await Promise.all([
+      getJSON(`https://countries-api-836d.onrender.com/countries/name/${c1}`),
+      getJSON(`https://countries-api-836d.onrender.com/countries/name/${c2}`),
+      getJSON(`https://countries-api-836d.onrender.com/countries/name/${c3}`),
+    ]);
+
+    console.log(data.map((d) => d[0].capital));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+get3Countries("portugal", "canada", "tanzania");
