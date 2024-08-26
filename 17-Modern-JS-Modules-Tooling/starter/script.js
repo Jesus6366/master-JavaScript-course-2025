@@ -46,3 +46,14 @@ import { addToCart } from "./shoppingCart";
 // })();
 
 // shoppingCart2.addToCart("apple", 4);
+
+//////////// commonjs modules
+
+// export in nodejs
+// export.addToCart = function (product, quantity) {
+//         cart.push({ product, quantity });
+//         console.log(`${quantity} ${product} order to supplier`);
+// }
+
+// // import
+// const {addToCart} = require("something")
